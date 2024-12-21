@@ -71,6 +71,33 @@ console.log();
     })
 
 
+    // for update
+    app.get('/tshirts/:id',async(req,res)=>{
+        const id=req.params.id;
+        const query={_id:new ObjectId(id)}
+        const result=await tshirtCollection.findOne(query)
+        res.send(result);
+    })
+
+
+    app.put('/tshirts/:id',async(req,res)=>{
+        const id=req.params.id;
+        const filter={_id:new ObjectId(id)}
+        const options={ upsert:true };
+        const updatetshirt=req.body;
+        const tshirt={
+            $set:{
+                brand:updatetshirt.brand,
+                size:updatetshirt.size, 
+                color:updatetshirt.color, 
+                category:updatetshirt.category, 
+                photo:updatetshirt.photo, 
+            }
+        }
+        const result=tshirtCollection.updateOne(filter,tshirt,options)
+        res.send(result);
+    })
+
 
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
