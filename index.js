@@ -25,7 +25,7 @@ const upload = multer({ storage });
 // Serve uploaded files statically
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// MongoDB connection
+
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@cluster0.uslpn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 const client = new MongoClient(uri, {
@@ -45,6 +45,11 @@ async function run() {
       const cursor = tshirtCollection.find();
       const result = await cursor.toArray();
       res.send(result);
+
+
+
+
+      
     });
 
     // Add a new T-shirt
@@ -105,7 +110,8 @@ async function run() {
 }
 run().catch(console.dir);
 
-// Default route
+
+
 app.get('/', (req, res) => {
   res.send('Server is running');
 });
@@ -113,3 +119,7 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+
+
+
